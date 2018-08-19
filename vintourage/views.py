@@ -7,9 +7,17 @@ from . import app
 
 
 @app.route('/')
-def hello_world():
+def index():
     products = Product.query.order_by(desc(Product.created))
     return render_template('index.html', products=products)
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
