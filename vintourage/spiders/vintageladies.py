@@ -17,12 +17,15 @@ class VintageladiesSpider(scrapy.Spider):
             if 'SPRZEDAN' in product.xpath('.//td[@class = "fe2"]/a/text()').extract_first():
                 continue
 
-            image = product.xpath('.//td[@class = "bg"]//img/@src').extract_first()
-            image_url = f'http://vintageladies.pl/{image}'
+            image_uri = product.xpath('.//td[@class = "bg"]//img/@src').extract_first()
+
+            # Rmove the osCsid argument as it breaks links
+            parts = [part for part in image_uri.split("=") if "osCsid" not in part]
+            image_uri = "=".join(parts)
 
             yield {
                 'name': product.xpath('.//td[@class = "fe2"]/a/text()').extract_first(),
-                'image': image_url,
+                'image': response.urljoin(image_uri),
                 'price': product.xpath('.//td[@class = "fe1"]/span/text()').extract_first(),
                 'link': product.xpath('.//td[@class = "bg"]//a/@href').extract_first()
             }
