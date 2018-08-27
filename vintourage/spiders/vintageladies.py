@@ -20,14 +20,15 @@ class VintageladiesSpider(scrapy.Spider):
             image_uri = product.xpath('.//td[@class = "bg"]//img/@src').extract_first()
 
             # Rmove the osCsid argument as it breaks links
-            parts = [part for part in image_uri.split("=") if "osCsid" not in part]
-            image_uri = "=".join(parts)
+            link = product.xpath('.//td[@class = "bg"]//a/@href').extract_first()
+            parts = [part for part in link.split("&") if "osCsid" not in part]
+            link = "&".join(parts)
 
             yield {
-                'name': product.xpath('.//td[@class = "fe2"]/a/text()').extract_first(),
+                'name': product.xpath('.//td[@class = "fe2"]/a/text()').extract_first()[:49],
                 'image': response.urljoin(image_uri),
                 'price': product.xpath('.//td[@class = "fe1"]/span/text()').extract_first(),
-                'link': product.xpath('.//td[@class = "bg"]//a/@href').extract_first()
+                'link': link,
             }
 
         selector = '//a[@class = "pageResults" and contains(@title, "Następna")]/@href'
