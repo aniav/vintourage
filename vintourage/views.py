@@ -17,7 +17,7 @@ def index(page=1):
         Product.query
         .filter(Product.created >= three_days_ago)
         .order_by(desc(Product.created))
-        .limit(50)
+        .limit(150)
     )
 
     products_by_date = defaultdict(list)
