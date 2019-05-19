@@ -6,7 +6,7 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import logging
 
-from .database import db_session
+from . import db
 from .models import Product
 
 logger = logging.getLogger(__name__)
@@ -23,5 +23,5 @@ class DatabasePipeline(object):
             return
 
         product = Product(**item)
-        db_session.add(product)
-        db_session.commit()
+        db.session.add(product)
+        db.session.commit()

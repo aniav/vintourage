@@ -9,8 +9,7 @@ from .somavintage import SomavintageSpider
 from .vintageladies import VintageladiesSpider
 
 crawlers = [
-    DewitchedSpider,
-    KlunkenSpider, RagsandsilksSpider, SomavintageSpider,
+    DewitchedSpider, KlunkenSpider, RagsandsilksSpider, SomavintageSpider,
     VintageladiesSpider
 ]
 process = CrawlerProcess(get_project_settings())

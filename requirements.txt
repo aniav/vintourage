@@ -1,5 +1,6 @@
 flask==1.0.3
 flask-sqlalchemy
+flask-migrate
 gunicorn==19.9.0
 psycopg2-binary==2.8.2
 scrapy==1.6.0

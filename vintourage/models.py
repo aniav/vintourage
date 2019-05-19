@@ -1,17 +1,16 @@
 import datetime
 
-from sqlalchemy import Column, Integer, String, DateTime
-from .database import Base
+from . import db
 
 
-class Product(Base):
+class Product(db.Model):
     __tablename__ = 'products'
 
-    link = Column(String(200), unique=True, primary_key=True)
-    name = Column(String(50))
-    price = Column(String(10))
-    image = Column(String(200))
-    created = Column(DateTime, default=datetime.datetime.utcnow)
+    link = db.Column(db.String(200), unique=True, primary_key=True)
+    name = db.Column(db.String(50))
+    price = db.Column(db.String(10))
+    image = db.Column(db.String(200))
+    created = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
     def __repr__(self):
         return '<Product %r (%r)>' % (self.name, self.link)
