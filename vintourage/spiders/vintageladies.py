@@ -9,7 +9,7 @@ class VintageladiesSpider(scrapy.Spider):
         'http://vintageladies.pl/index.php?cPath=31_32', # sukienki codzienne
         'http://vintageladies.pl/index.php?cPath=31_33', # sukienki koktajlowe
         'http://vintageladies.pl/index.php?cPath=31_34', # na wielki bal
-        ]
+    ]
 
     def parse(self, response):
         for product in response.xpath('//td[@valign = "top" and @width = "169"]'):

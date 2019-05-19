@@ -11,11 +11,11 @@ from . import app
 @app.route('/')
 @app.route('/page/<int:page>')
 def index(page=1):
-    three_days_ago = datetime.datetime.now().date() - datetime.timedelta(days=7 * page)
+    seven_days_ago = datetime.datetime.now().date() - datetime.timedelta(days=7 * page)
 
     products = (
         Product.query
-        .filter(Product.created >= three_days_ago)
+        .filter(Product.created >= seven_days_ago)
         .order_by(desc(Product.created))
         .limit(150)
     )
