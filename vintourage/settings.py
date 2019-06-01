@@ -58,9 +58,11 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
-#EXTENSIONS = {
-#    'scrapy.extensions.telnet.TelnetConsole': None,
-#}
+EXTENSIONS = {
+    'vintourage.extensions.SentryLogging': -1, # Load SentryLogging extension before others
+}
+
+SENTRY_DSN = "https://4af5bb6641d04d888a3d762bd20bdf14@sentry.io/1472720"
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
