@@ -3,14 +3,15 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 
 from .dewitched import DewitchedSpider
+from .inspired import InspiredSpider
 from .klunken import KlunkenSpider
 from .ragsandsilks import RagsandsilksSpider
 from .somavintage import SomavintageSpider
 from .vintageladies import VintageladiesSpider
 
 crawlers = [
-    DewitchedSpider, KlunkenSpider, RagsandsilksSpider, SomavintageSpider,
-    VintageladiesSpider
+    DewitchedSpider, InspiredSpider, KlunkenSpider, RagsandsilksSpider,
+    SomavintageSpider, VintageladiesSpider
 ]
 process = CrawlerProcess(get_project_settings())
 for crawler in crawlers:
