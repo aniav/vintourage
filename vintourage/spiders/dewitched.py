@@ -10,11 +10,15 @@ class DewitchedSpider(scrapy.Spider):
     def parse(self, response):
         main_list = response.css('div.products-list')[0]
         for product in main_list.css('div.product'):
-            image_uri = product.css('figure.product-image img::attr(src)').extract_first().lstrip('.')
+            image_uri = product.css('figure.product-image img::attr(src)').get().lstrip('.')
+            price = product.css('span.product-price strong::text').get()
+
+            active = 'Sprzedan' not in price
 
             yield {
-                'name': product.css('strong.product-name::text').extract_first(),
+                'name': product.css('strong.product-name::text').get(),
                 'image': response.urljoin(image_uri),
-                'price': product.css('span.product-price strong::text').extract_first(),
-                'link': product.css('a.product-area::attr(href)').extract_first()
+                'price': price,
+                'link': product.css('a.product-area::attr(href)').get(),
+                'active': active
             }

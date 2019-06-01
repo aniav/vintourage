@@ -13,26 +13,25 @@ class VintageladiesSpider(scrapy.Spider):
 
     def parse(self, response):
         for product in response.xpath('//td[@valign = "top" and @width = "169"]'):
+            active = 'SPRZEDAN' not in product.xpath('.//td[@class = "fe2"]/a/text()').get()
 
-            if 'SPRZEDAN' in product.xpath('.//td[@class = "fe2"]/a/text()').extract_first():
-                continue
-
-            image_uri = product.xpath('.//td[@class = "bg"]//img/@src').extract_first()
+            image_uri = product.xpath('.//td[@class = "bg"]//img/@src').get()
 
             # Rmove the osCsid argument as it breaks links
-            link = product.xpath('.//td[@class = "bg"]//a/@href').extract_first()
+            link = product.xpath('.//td[@class = "bg"]//a/@href').get()
             parts = [part for part in link.split("&") if "osCsid" not in part]
             link = "&".join(parts)
 
             yield {
-                'name': product.xpath('.//td[@class = "fe2"]/a/text()').extract_first()[:49],
+                'name': product.xpath('.//td[@class = "fe2"]/a/text()').get()[:49],
                 'image': response.urljoin(image_uri),
-                'price': product.xpath('.//td[@class = "fe1"]/span/text()').extract_first(),
+                'price': product.xpath('.//td[@class = "fe1"]/span/text()').get(),
                 'link': link,
+                'active': active
             }
 
         selector = '//a[@class = "pageResults" and contains(@title, "Następna")]/@href'
-        next_page = response.xpath(selector).extract_first()
+        next_page = response.xpath(selector).get()
         if next_page is not None:
             next_page = response.urljoin(next_page)
             yield scrapy.Request(next_page, callback=self.parse)
