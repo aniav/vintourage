@@ -17,11 +17,12 @@ class ValidationPipeline(object):
 
 
 class DatabasePipeline(object):
-    def process_item(self, item, spider):
-        if Product.query.filter(Product.link==item['link']).scalar() is not None:
-            logger.info('Product with link %s already exists', item['link'])
-            return
+    def process_item(self, product_dict, spider):
+        product = Product.query.filter_by(link=product_dict['link']).first()
+        if not product:
+            product = Product(**product_dict)
+            db.session.add(product)
+        else:
+            product.update(**product_dict)
 
-        product = Product(**item)
-        db.session.add(product)
         db.session.commit()
