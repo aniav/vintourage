@@ -1,2 +1,2 @@
-release: flask db update
+release: flask db upgrade
 web: gunicorn vintourage:app
