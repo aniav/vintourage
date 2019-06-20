@@ -7,25 +7,33 @@ from . import app
 from .models import Product
 
 
-@app.route('/', defaults={'page': 1})
-@app.route('/page/<int:page>')
-def index(page=1):
+@app.route('/')
+def index():
+    latest_products = (
+        Product.query
+        .filter_by(active=True)
+        .order_by(desc(Product.created))
+        .limit(6)
+    )
+    context = {
+        "latest_products": latest_products,
+    }
+    return render_template('index.html', **context)
+
+
+@app.route('/products')
+@app.route('/products/page/<int:page>')
+def products(page=1):
     products = (
         Product.query
+        .filter_by(active=True)
         .order_by(desc(Product.created))
         .paginate(page, app.config['PAGINATION_PAGE_SIZE'], error_out=False)
     )
-
-    products_by_date = defaultdict(list)
-    for product in products.items:
-        create_date = product.created.date()
-        products_by_date[create_date].append(product)
-
     context = {
         "products": products,
-        "products_by_date": products_by_date
     }
-    return render_template('index.html', **context)
+    return render_template('shop.html', **context)
 
 @app.route('/about')
 def about():
