@@ -6,8 +6,8 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import logging
 
-from . import db
-from .models import Product
+from .. import db
+from ..models import Product
 
 logger = logging.getLogger(__name__)
 

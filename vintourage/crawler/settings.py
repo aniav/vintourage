@@ -11,8 +11,8 @@
 
 BOT_NAME = 'vintourage'
 
-SPIDER_MODULES = ['vintourage.spiders']
-NEWSPIDER_MODULE = 'vintourage.spiders'
+SPIDER_MODULES = ['vintourage.crawler.spiders']
+NEWSPIDER_MODULE = 'vintourage.crawler.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -59,7 +59,7 @@ ROBOTSTXT_OBEY = True
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
 EXTENSIONS = {
-    'vintourage.extensions.SentryLogging': -1, # Load SentryLogging extension before others
+    'vintourage.crawler.extensions.SentryLogging': -1, # Load SentryLogging extension before others
 }
 
 SENTRY_DSN = "https://4af5bb6641d04d888a3d762bd20bdf14@sentry.io/1472720"
@@ -67,7 +67,7 @@ SENTRY_DSN = "https://4af5bb6641d04d888a3d762bd20bdf14@sentry.io/1472720"
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'vintourage.pipelines.DatabasePipeline': 1,
+   'vintourage.crawler.pipelines.DatabasePipeline': 1,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
