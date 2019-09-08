@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
-import scrapy
 import tinycss2
 
+from crawler.base import CategorySpider
 
-class InspiredSpider(scrapy.Spider):
+
+class InspiredSpider(CategorySpider):
     name = 'inspired'
     allowed_domains = ['inspired.sklep.pl']
-    start_urls = ['https://inspired.sklep.pl/kategoria-produktu/sukienki/']
+    category_mapping = {
+        Categories.sukienki: ['https://inspired.sklep.pl/kategoria-produktu/sukienki/']
+    }
 
     def parse(self, response):
         for product in response.css('li.htheme_single_wc_item'):

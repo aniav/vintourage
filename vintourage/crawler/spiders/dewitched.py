@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
-import scrapy
+from crawler.base import CategorySpider
+from vintourage.constants import Categories
 
 
-class DewitchedSpider(scrapy.Spider):
+class DewitchedSpider(CategorySpider):
     name = 'dewitched'
     allowed_domains = ['www.dewitched.pl']
-    start_urls = ['https://www.dewitched.pl/dla-pan-cat-5']
+    category_mapping = {
+        Categories.sukienki: ['https://www.dewitched.pl/dla-pan-cat-5']
+    }
 
     def parse(self, response):
         main_list = response.css('div.products-list')[0]

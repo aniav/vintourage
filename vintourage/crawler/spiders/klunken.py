@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-import scrapy
+from crawler.base import CategorySpider
 
 
-class KlunkenSpider(scrapy.Spider):
+class KlunkenSpider(CategorySpider):
     name = 'klunken'
     allowed_domains = ['klunken.pl']
-    start_urls = ['http://klunken.pl/kategoria-produktu/kobieta/sukienki/']
+    category_mapping = {
+        Categories.sukienki: ['http://klunken.pl/kategoria-produktu/kobieta/sukienki/']
+    }
 
     def parse(self, response):
         for product in response.css('li.product'):

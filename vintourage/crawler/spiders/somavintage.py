@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import scrapy
+from crawler.base import CategorySpider
+
 
 def clean_whitespaces(value):
     if not value:
@@ -7,10 +8,12 @@ def clean_whitespaces(value):
     return value.replace('\n','').replace('\t','').replace(' ', '')
 
 
-class SomavintageSpider(scrapy.Spider):
+class SomavintageSpider(CategorySpider):
     name = 'somavintage'
     allowed_domains = ['somavintagestore.com']
-    start_urls = ['http://somavintagestore.com/ubrania/sukienki']
+    category_mapping = {
+        Categories.sukienki: ['http://somavintagestore.com/ubrania/sukienki']
+    }
 
     def get_price_for_product(self, product):
         """Get the price of the product.

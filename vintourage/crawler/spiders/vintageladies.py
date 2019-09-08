@@ -1,15 +1,30 @@
 # -*- coding: utf-8 -*-
-import scrapy
+from crawler.base import CategorySpider
+from vintourage.constants import Categories
 
 
-class VintageladiesSpider(scrapy.Spider):
+class VintageladiesSpider(CategorySpider):
     name = 'vintageladies'
     allowed_domains = ['vintageladies.pl']
-    start_urls = [
-        'http://vintageladies.pl/index.php?cPath=31_32', # sukienki codzienne
-        'http://vintageladies.pl/index.php?cPath=31_33', # sukienki koktajlowe
-        'http://vintageladies.pl/index.php?cPath=31_34', # na wielki bal
-    ]
+    category_mapping = {
+        Categories.bluzki_damskie: [
+            'http://vintageladies.pl/index.php?cPath=21_22',
+            'http://vintageladies.pl/index.php?cPath=21_23',
+        ],
+        Categories.sukienki: [
+            'http://vintageladies.pl/index.php?cPath=31_33',
+            'http://vintageladies.pl/index.php?cPath=31_34',
+        ],
+        Categories.swetry_damskie: [
+            'http://vintageladies.pl/index.php?cPath=24',
+        ],
+        Categories.spodnice: [
+            'http://vintageladies.pl/index.php?cPath=25_26',
+            'http://vintageladies.pl/index.php?cPath=25_27',
+            'http://vintageladies.pl/index.php?cPath=25_28',
+            'http://vintageladies.pl/index.php?cPath=25_29',
+        ]
+    }
 
     def parse(self, response):
         for product in response.xpath('//td[@valign = "top" and @width = "169"]'):
@@ -27,7 +42,7 @@ class VintageladiesSpider(scrapy.Spider):
                 'image': response.urljoin(image_uri),
                 'price': product.xpath('.//td[@class = "fe1"]/span/text()').get(),
                 'link': link,
-                'active': active
+                'active': active,
             }
 
         selector = '//a[@class = "pageResults" and contains(@title, "Następna")]/@href'

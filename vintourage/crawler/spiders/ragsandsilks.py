@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-import scrapy
+from crawler.base import CategorySpider
 
 
-class RagsandsilksSpider(scrapy.Spider):
+class RagsandsilksSpider(CategorySpider):
     name = 'ragsandsilks'
     allowed_domains = ['ragsandsilks.pl']
-    start_urls = ['https://ragsandsilks.pl/pl/c/SUKIENKI/20']
+    category_mapping = {
+        Categories.sukienki: ['https://ragsandsilks.pl/pl/c/SUKIENKI/20']
+    }
 
     def parse(self, response):
         for product in response.css('div.product'):
