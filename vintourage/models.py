@@ -1,9 +1,21 @@
 import datetime
 
+from sqlalchemy import create_engine
+from sqlalchemy import func
+from sqlalchemy import Integer
+from sqlalchemy import select
+from sqlalchemy import String
+from sqlalchemy.dialects.postgresql import ARRAY
+from sqlalchemy.orm import foreign
+from sqlalchemy.orm import relationship
+from sqlalchemy.orm import remote
+from sqlalchemy.orm import Session
+from sqlalchemy.sql.expression import cast
+
 from . import db
 
 
-class Category(Base):
+class Category(db.Model):
     """Illustrates the "materialized paths" pattern.
 
     Materialized paths is a way to represent a tree structure in SQL with fast
@@ -40,8 +52,9 @@ class Category(Base):
         men
         men/blouses
     """
-    __tablename__ = "categories"
+    __tablename__ = "category"
 
+    id = db.Column(Integer, primary_key=True, autoincrement=False)
     name = db.Column(db.String(120))
     slug = db.Column(db.String(50))
 
@@ -81,6 +94,8 @@ class Category(Base):
         order_by=path,
     )
 
+    products = db.relationship('Product', backref='category', lazy=True)
+
     @property
     def depth(self):
         return len(self.path.split("/")) - 1
@@ -114,7 +129,7 @@ class Product(db.Model):
     created = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     updated = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     active = db.Column(db.Boolean(), default=True)
-    category_id = Column(Integer, ForeignKey('categories.id'))
+    category_id = db.Column(Integer, db.ForeignKey('category.id'))
 
     def __repr__(self):
         return '<Product %r (%r)>' % (self.name, self.link)
