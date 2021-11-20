@@ -2,7 +2,10 @@ flask==1.0.3
 flask-sqlalchemy
 flask-migrate
 gunicorn==19.9.0
-psycopg2-binary==2.8.2
+psycopg2-binary==2.9.2
 scrapy==1.6.0
 sentry-sdk[flask]==0.8.1
 tinycss2==1.0.2
+pytest==6.1.1
+pytest-flask==1.0.0
+wheel
