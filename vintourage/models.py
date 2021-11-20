@@ -54,7 +54,7 @@ class Category(db.Model):
     """
     __tablename__ = "category"
 
-    id = db.Column(Integer, primary_key=True, autoincrement=False)
+    id = db.Column(Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(120))
     slug = db.Column(db.String(50))
 
@@ -62,7 +62,7 @@ class Category(db.Model):
 
     # To find the descendants of this node, we look for nodes whose path
     # starts with this node's path.
-    descentands = db.relationship(
+    descendants = db.relationship(
         "Category",
         viewonly=True,
         order_by=path,
