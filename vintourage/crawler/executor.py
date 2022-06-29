@@ -13,6 +13,7 @@ crawlers = [
     SomavintageSpider, VintageladiesSpider
 ]
 process = CrawlerProcess(get_project_settings())
+
 for crawler in crawlers:
     process.crawl(crawler)
 
