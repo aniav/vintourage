@@ -8,8 +8,8 @@ from sentry_sdk.integrations.flask import FlaskIntegration
 from .config import Config
 
 
-ENVIRONMENT = os.environ.get("FLASK_ENV", default='production')
-if ENVIRONMENT != 'development':
+DEBUG = os.environ.get("FLASK_DEBUG", default=False)
+if DEBUG:
     sentry_sdk.init(
         dsn="https://4af5bb6641d04d888a3d762bd20bdf14@sentry.io/1472720",
         integrations=[FlaskIntegration()]
