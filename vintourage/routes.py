@@ -28,7 +28,7 @@ def products(page=1):
         Product.query
         .filter_by(active=True)
         .order_by(desc(Product.created))
-        .paginate(page, app.config['PAGINATION_PAGE_SIZE'], error_out=False)
+        .paginate(page=page, per_page=app.config['PAGINATION_PAGE_SIZE'], error_out=False)
     )
     context = {
         "products": products,
