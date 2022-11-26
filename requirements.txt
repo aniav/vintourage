@@ -3,6 +3,6 @@ flask-sqlalchemy
 flask-migrate
 gunicorn==20.1.0
 psycopg2-binary==2.9.5
-scrapy==1.6.0
+scrapy==2.7.1
 sentry-sdk[flask]==1.11.1
 tinycss2==1.0.2
