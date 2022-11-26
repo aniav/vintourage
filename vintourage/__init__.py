@@ -9,7 +9,7 @@ from .config import Config
 
 
 DEBUG = os.environ.get("FLASK_DEBUG", default=False)
-if DEBUG:
+if not DEBUG:
     sentry_sdk.init(
         dsn="https://4af5bb6641d04d888a3d762bd20bdf14@sentry.io/1472720",
         integrations=[FlaskIntegration()]
